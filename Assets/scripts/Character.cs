@@ -3,45 +3,99 @@ using System.Collections;
 
 public class Character : MonoBehaviour 
 {
-	public Sprite[] walk = new Sprite[4];
-	public bool walking = true;
-	public float speed = 0.3f;
+	public Sprite[] walk = new Sprite[6];
+	public Sprite[] jump = new Sprite[6];
+	public Sprite[] slide = new Sprite[6];
 
-	void Awake()
+	public bool walking = false;
+	public bool jumping = false;
+	public bool sliding = false;
+
+	public float runSpeed = 0.9f;
+	public float jumpSpeed = 0.7f;
+	public float slideSpeed = 0.5f;
+	public float jumphi = 200;
+
+	void OnCollisionEnter2D(Collision2D collision) 
 	{
-		gameObject.AddComponent("BoxCollider2D");
+		if (collision.gameObject.name == "Ground")
+		{
+			jumping = false;			
+			walking = false;
+			StopCoroutine(AnimateJump());
+		}		
 	}
 
 	void Update()
 	{
-		if(walking)
-		{
-			StartCoroutine(Animate());
-		}
+		transform.position = new Vector3(transform.position.x + .2f, transform.position.y, transform.position.z);
 
-		if (Input.GetKeyDown (KeyCode.D))
+		if (Input.GetKeyDown (KeyCode.W))
+		{	
+			if(!jumping)
+			{
+				rigidbody2D.AddForce (Vector3.up * jumphi);
+				StopCoroutine (AnimateWalk());
+				StartCoroutine (AnimateJump());
+			}
+		} 
+		else if(Input.GetKeyDown(KeyCode.S))
 		{
-			transform.rotation = Quaternion.Euler(0,180,0);
-			rigidbody2D.AddForce(Vector3.up * 100);
+			if(!sliding && !jumping)
+			{		
+				StopCoroutine (AnimateWalk());
+				StartCoroutine (AnimateSlide());
+			}
 		}
-		else if(Input.GetKeyDown (KeyCode.A))
+		else 
 		{
-			transform.rotation = Quaternion.Euler(0,0,0);
-			rigidbody2D.AddForce(Vector3.up * 100);
+			if (!walking && !jumping) 
+			{
+				StartCoroutine (AnimateWalk());
+			}
 		}
 	}
 
-	private IEnumerator Animate()
+	private IEnumerator AnimateWalk()
 	{
-		walking = false;
+		walking = true;
 
 		foreach(Sprite step in walk)
 		{
-			GetComponent<SpriteRenderer>().sprite = step;	
-			yield return new WaitForSeconds(speed);
+			if(!jumping && !sliding){
+				GetComponent<SpriteRenderer>().sprite = step;	
+				yield return new WaitForSeconds(runSpeed);
+			}
+			else{
+				break;
+			}
 		}
 
-		walking = true;
+		walking = false;
+	}
+
+	private IEnumerator AnimateJump()
+	{
+		jumping = true;
+		
+		foreach(Sprite jumpy in jump)
+		{
+			GetComponent<SpriteRenderer>().sprite = jumpy;	
+			yield return new WaitForSeconds(jumpSpeed);
+		}
+	}
+
+	private IEnumerator AnimateSlide()
+	{
+		sliding = true;
+		
+		foreach(Sprite sl in slide)
+		{
+			GetComponent<SpriteRenderer>().sprite = sl;	
+			yield return new WaitForSeconds(slideSpeed);
+		}
+
+		sliding = false;
 	}
 
 }
