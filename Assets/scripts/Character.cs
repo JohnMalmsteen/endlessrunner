@@ -23,14 +23,18 @@ public class Character : MonoBehaviour
 
 	void OnCollisionEnter2D(Collision2D collision) 
 	{
-		if (collision.gameObject.name == "Ground")
-		{
+		if (collision.gameObject.name == "GroundCol") {
 			jumping = false;			
 			walking = false;
 			hasDoubleJump = false;
-			StopCoroutine("AnimateJump");
-			StartCoroutine("AnimateWalk");
-		}		
+			StopCoroutine ("AnimateJump");
+			StartCoroutine ("AnimateWalk");
+
+		} 
+		else if (collision.gameObject.name == "blade_3_floor(Clone)" || collision.gameObject.name == "blade") 
+		{
+			Application.LoadLevel(0);
+		}
 	}
 
 	void Update()
@@ -57,9 +61,12 @@ public class Character : MonoBehaviour
 		else if(Input.GetKeyDown(KeyCode.S))
 		{
 			if(!sliding && !jumping)
-			{		
+			{	
+				Destroy(GetComponent<BoxCollider2D>());
 				StopCoroutine ("AnimateWalk");
 				StartCoroutine ("AnimateSlide");
+				Destroy(GetComponent<BoxCollider2D>());
+				gameObject.AddComponent<BoxCollider2D>();
 			}
 		}
 		else 
@@ -115,10 +122,14 @@ public class Character : MonoBehaviour
 
 		foreach (Sprite sl in startSlide) 
 		{
+
 			GetComponent<SpriteRenderer>().sprite = sl;
 			yield return new WaitForSeconds(slideSpeed);
 		}
 
+		Destroy(GetComponent<BoxCollider2D>());
+		gameObject.AddComponent<BoxCollider2D>();
+		
 		do 
 		{
 			foreach (Sprite sl in heldSlide) 
@@ -136,6 +147,9 @@ public class Character : MonoBehaviour
 
 		particle.enableEmission = false;
 
+		Destroy(GetComponent<BoxCollider2D>());
+		gameObject.AddComponent<BoxCollider2D>();
+		
 		sliding = false;
 		StartCoroutine ("AnimateWalk");
 	}
