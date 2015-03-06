@@ -6,11 +6,14 @@ public class Character : MonoBehaviour
 	public ParticleSystem particle;
 	public Sprite[] walk = new Sprite[6];
 	public Sprite[] jump = new Sprite[6];
-	public Sprite[] slide = new Sprite[6];
+	public Sprite[] startSlide = new Sprite[3];
+	public Sprite[] heldSlide = new Sprite[3];
+	public Sprite[] endSlide = new Sprite[3];
 
 	public bool walking = false;
 	public bool jumping = false;
 	public bool sliding = false;
+	public bool hasDoubleJump = false;
 
 	public float runSpeed = 0.9f;
 	public float jumpSpeed = 0.7f;
@@ -23,6 +26,7 @@ public class Character : MonoBehaviour
 		{
 			jumping = false;			
 			walking = false;
+			hasDoubleJump = false;
 			StopCoroutine(AnimateJump());
 		}		
 	}
@@ -38,6 +42,13 @@ public class Character : MonoBehaviour
 				rigidbody2D.AddForce (Vector3.up * jumphi);
 				StopCoroutine (AnimateWalk());
 				StartCoroutine (AnimateJump());
+				hasDoubleJump = true;
+			}
+			else if (jumping && hasDoubleJump){
+				rigidbody2D.AddForce(Vector3.up * jumphi);
+				StopCoroutine(AnimateJump());
+				StartCoroutine(AnimateJump());
+				hasDoubleJump = false;
 			}
 		} 
 		else if(Input.GetKeyDown(KeyCode.S))
@@ -92,11 +103,28 @@ public class Character : MonoBehaviour
 
 		particle.enableEmission = true;
 
-		foreach(Sprite sl in slide)
+		foreach (Sprite sl in startSlide) 
+		{
+			GetComponent<SpriteRenderer>().sprite = sl;
+			yield return new WaitForSeconds(slideSpeed);
+		}
+
+		do 
+		{
+			foreach (Sprite sl in heldSlide) 
+			{
+				GetComponent<SpriteRenderer>().sprite = sl;
+				yield return new WaitForSeconds(slideSpeed);
+			}
+		} while (Input.GetKey(KeyCode.S));
+
+		foreach(Sprite sl in endSlide)
 		{
 			GetComponent<SpriteRenderer>().sprite = sl;	
 			yield return new WaitForSeconds(slideSpeed);
 		}
+
+
 
 		particle.enableEmission = false;
 
