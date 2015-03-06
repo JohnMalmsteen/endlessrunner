@@ -3,6 +3,7 @@ using System.Collections;
 
 public class Character : MonoBehaviour 
 {
+	public ParticleSystem particle;
 	public Sprite[] walk = new Sprite[6];
 	public Sprite[] jump = new Sprite[6];
 	public Sprite[] slide = new Sprite[6];
@@ -28,7 +29,7 @@ public class Character : MonoBehaviour
 
 	void Update()
 	{
-		transform.position = new Vector3(transform.position.x + .2f, transform.position.y, transform.position.z);
+		///transform.position = new Vector3(transform.position.x + .2f, transform.position.y, transform.position.z);
 
 		if (Input.GetKeyDown (KeyCode.W))
 		{	
@@ -88,12 +89,16 @@ public class Character : MonoBehaviour
 	private IEnumerator AnimateSlide()
 	{
 		sliding = true;
-		
+
+		particle.enableEmission = true;
+
 		foreach(Sprite sl in slide)
 		{
 			GetComponent<SpriteRenderer>().sprite = sl;	
 			yield return new WaitForSeconds(slideSpeed);
 		}
+
+		particle.enableEmission = false;
 
 		sliding = false;
 	}

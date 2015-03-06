@@ -8,8 +8,10 @@ public class KillBackground : MonoBehaviour
 		string obName = ob.gameObject.name;
 
 		GameObject backSpawner = GameObject.Find("BackgroundSpawner");
+		GameObject cloudSpawner = GameObject.Find("CloudSpawner");
 
 		BackgroundSpawn spwn = backSpawner.GetComponent<BackgroundSpawn>();
+		Cloud cloud = backSpawner.GetComponent<Cloud>();
 
 		if (obName == "mountainLeft" || obName == "backLeft(Clone)" || obName == "backRight(Clone)" || obName == "backLeft" || obName == "backRight") 
 		{
@@ -26,6 +28,12 @@ public class KillBackground : MonoBehaviour
 		if (obName == "fogLeft" || obName == "fogLeft(Clone)" || obName == "fogRight" || obName == "fogRight(Clone)") 
 		{
 			spwn.spawnFog();
+			Destroy(ob.gameObject);
+		}
+
+		if (obName == "cloud_1(Clone)" || obName == "cloud_2(Clone)" || obName == "cloud_3(Clone)") 
+		{
+			cloud.spawnCloud();
 			Destroy(ob.gameObject);
 		}
 
