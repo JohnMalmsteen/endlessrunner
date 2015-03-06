@@ -1,10 +1,8 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\scripts\KillBackground.cs">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/scripts/Character.cs">
     <Files>
-      <File FileName="Assets\scripts\Cloud.cs" Line="10" Column="3" />
-      <File FileName="Assets\scripts\Character.cs" Line="1" Column="1" />
-      <File FileName="Assets\scripts\KillBackground.cs" Line="11" Column="1" />
+      <File FileName="Assets/scripts/Character.cs" Line="56" Column="5" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

@@ -14,10 +14,11 @@ public class Character : MonoBehaviour
 	public bool jumping = false;
 	public bool sliding = false;
 	public bool hasDoubleJump = false;
+	public bool grounded = true;
 
 	public float runSpeed = 0.9f;
-	public float jumpSpeed = 0.7f;
-	public float slideSpeed = 0.5f;
+	public float jumpSpeed = 0.9f;
+	public float slideSpeed = 0.7f;
 	public float jumphi = 200;
 
 	void OnCollisionEnter2D(Collision2D collision) 
@@ -27,7 +28,8 @@ public class Character : MonoBehaviour
 			jumping = false;			
 			walking = false;
 			hasDoubleJump = false;
-			StopCoroutine(AnimateJump());
+			StopCoroutine("AnimateJump");
+			StartCoroutine("AnimateWalk");
 		}		
 	}
 
@@ -40,14 +42,15 @@ public class Character : MonoBehaviour
 			if(!jumping)
 			{
 				rigidbody2D.AddForce (Vector3.up * jumphi);
-				StopCoroutine (AnimateWalk());
-				StartCoroutine (AnimateJump());
+				StopCoroutine ("AnimateWalk");
+				StartCoroutine ("AnimateJump");
 				hasDoubleJump = true;
 			}
 			else if (jumping && hasDoubleJump){
+				rigidbody2D.velocity = new Vector3(0, 0, 0);
 				rigidbody2D.AddForce(Vector3.up * jumphi);
-				StopCoroutine(AnimateJump());
-				StartCoroutine(AnimateJump());
+				//StopCoroutine("AnimateJump");
+				//StartCoroutine("AnimateJump");
 				hasDoubleJump = false;
 			}
 		} 
@@ -55,15 +58,16 @@ public class Character : MonoBehaviour
 		{
 			if(!sliding && !jumping)
 			{		
-				StopCoroutine (AnimateWalk());
-				StartCoroutine (AnimateSlide());
+				StopCoroutine ("AnimateWalk");
+				StartCoroutine ("AnimateSlide");
 			}
 		}
 		else 
 		{
-			if (!walking && !jumping) 
+			if (!walking && !jumping && !sliding) 
 			{
-				StartCoroutine (AnimateWalk());
+				StopCoroutine("AnimateSlide");
+				StartCoroutine("AnimateWalk");
 			}
 		}
 	}
@@ -74,13 +78,9 @@ public class Character : MonoBehaviour
 
 		foreach(Sprite step in walk)
 		{
-			if(!jumping && !sliding){
-				GetComponent<SpriteRenderer>().sprite = step;	
-				yield return new WaitForSeconds(runSpeed);
-			}
-			else{
-				break;
-			}
+			GetComponent<SpriteRenderer>().sprite = step;	
+			yield return new WaitForSeconds(runSpeed);
+		
 		}
 
 		walking = false;
@@ -104,6 +104,7 @@ public class Character : MonoBehaviour
 				yield return new WaitForSeconds(runSpeed);
 			}
 		}
+		jumping = false;
 	}
 
 	private IEnumerator AnimateSlide()
@@ -133,11 +134,10 @@ public class Character : MonoBehaviour
 			yield return new WaitForSeconds(slideSpeed);
 		}
 
-
-
 		particle.enableEmission = false;
 
 		sliding = false;
+		StartCoroutine ("AnimateWalk");
 	}
 
 }

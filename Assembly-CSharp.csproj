@@ -48,6 +48,7 @@
   <ItemGroup>
      <Compile Include="Assets\scripts\BackgroundCrawl.cs" />
      <Compile Include="Assets\scripts\BackgroundSpawn.cs" />
+     <Compile Include="Assets\scripts\CameraScript.cs" />
      <Compile Include="Assets\scripts\Character.cs" />
      <Compile Include="Assets\scripts\Cloud.cs" />
      <Compile Include="Assets\scripts\FogCrawl.cs" />
