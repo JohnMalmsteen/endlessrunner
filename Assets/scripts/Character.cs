@@ -95,6 +95,15 @@ public class Character : MonoBehaviour
 			GetComponent<SpriteRenderer>().sprite = jumpy;	
 			yield return new WaitForSeconds(jumpSpeed);
 		}
+
+		while (jumping) 
+		{
+			foreach(Sprite jumpy in jump)
+			{
+				GetComponent<SpriteRenderer>().sprite = jumpy;	
+				yield return new WaitForSeconds(runSpeed);
+			}
+		}
 	}
 
 	private IEnumerator AnimateSlide()
