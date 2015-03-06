@@ -61,6 +61,7 @@
      <Compile Include="Assets\scripts\StatManager.cs" />
      <Compile Include="Assets\scripts\bloodSpurt.cs" />
      <Compile Include="Assets\scripts\rotate.cs" />
+     <Compile Include="Assets\scripts\score.cs" />
      <Compile Include="Assets\scripts\start.cs" />
      <Compile Include="Assets\scripts\title.cs" />
  <Reference Include="UnityEngine.UI">

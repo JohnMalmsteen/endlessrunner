@@ -25,7 +25,7 @@ public class KillBackground : MonoBehaviour
 			Destroy(ob.gameObject);
 		}
 
-		if (obName == "fogLeft" || obName == "fogLeft(Clone)" || obName == "fogRight" || obName == "fogRight(Clone)") 
+		if (obName == "fog" || obName == "fogLeft" || obName == "fogLeft(Clone)" || obName == "fogRight" || obName == "fogRight(Clone)") 
 		{
 			spwn.spawnFog();
 			Destroy(ob.gameObject);

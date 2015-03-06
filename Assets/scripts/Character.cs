@@ -31,7 +31,7 @@ public class Character : MonoBehaviour
 			StartCoroutine ("AnimateWalk");
 
 		} 
-		else if (collision.gameObject.name == "blade_3_floor(Clone)" || collision.gameObject.name == "blade") 
+		else if (collision.gameObject.name == "blade_3_floor(Clone)" || collision.gameObject.name == "blade" || collision.gameObject.name == "blade_2_floor(Clone)" || collision.gameObject.name == "blade_2_spread_floor(Clone)" ) 
 		{
 			Application.LoadLevel(0);
 		}

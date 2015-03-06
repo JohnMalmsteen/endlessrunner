@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
 
 public class title : MonoBehaviour 
 {
@@ -7,7 +8,13 @@ public class title : MonoBehaviour
 	public Sprite[] slide = new Sprite[3];
 	public float slideSpeed = 0.03f;
 	public bool sliding = false;
-	
+	public Text highText;
+
+	void Start()
+	{
+		highText.text = "High score: " + PlayerPrefs.GetInt("HIGHSCORE");
+	}
+
 	void Update()
 	{
 		StartCoroutine(AnimateSlide());
