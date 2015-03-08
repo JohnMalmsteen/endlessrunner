@@ -7,7 +7,7 @@ public class SpawnBlades : MonoBehaviour
 	private bool spawning = false;
 	
 	public GameObject []blades = new GameObject[BLADES_MAX];
-	private float spawnTime = 4f;
+	private float spawnTime = 3f;
 	public GameObject crotchet;
 
 	void Update () 
@@ -35,9 +35,11 @@ public class SpawnBlades : MonoBehaviour
 			}
 
 			int randNum = Random.Range(0, 3);
-			if(randNum == 1) crotchPos = new Vector3(33f, -.4f, 0);
-			else if (randNum == 2) crotchPos = new Vector3(33f, 1.95f, 0);
-			else crotchPos = new Vector3(33f, 3.95f, 0);
+			float xPos = 38f;
+			xPos += Random.Range(-5f, +5f);
+			if(randNum == 1) crotchPos = new Vector3(xPos, -.4f, 0);
+			else if (randNum == 2) crotchPos = new Vector3(xPos, 1.95f, 0);
+			else crotchPos = new Vector3(xPos, 3.95f, 0);
 
 			Instantiate(blades[randBlade], myPos, Quaternion.identity);
 			Instantiate(crotchet, crotchPos, Quaternion.identity);

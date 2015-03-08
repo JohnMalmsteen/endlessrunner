@@ -58,8 +58,8 @@ public class Character : MonoBehaviour
 			if(!jumping)
 			{
 				player.rigidbody2D.gravityScale = 2;
-				rigidbody2D.AddForce (Vector3.up * jumphi * 1.2f);
-
+				rigidbody2D.AddForce (Vector3.up * jumphi);
+				StopCoroutine ("AnimateWalk");
 				StartCoroutine ("AnimateJump");
 				hasDoubleJump = true;
 			}
