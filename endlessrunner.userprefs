@@ -1,9 +1,8 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\scripts\score.cs">
+  <MonoDevelop.Ide.Workspace />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\scripts\Character.cs">
     <Files>
-      <File FileName="Assets\scripts\score.cs" Line="11" Column="14" />
-      <File FileName="Assets\scripts\Character.cs" Line="86" Column="31" />
+      <File FileName="Assets\scripts\Character.cs" Line="196" Column="117" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

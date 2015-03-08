@@ -32,7 +32,7 @@ public class Character : MonoBehaviour
 			hasDoubleJump = false;
 			StopCoroutine ("AnimateJump");
 			StopCoroutine("AnimateWalk");
-			StartCoroutine ("AnimateWalk");
+			//StartCoroutine ("AnimateWalk");
 			
 		} 
 	}
@@ -80,20 +80,20 @@ public class Character : MonoBehaviour
 			GameObject player = GameObject.Find ("Player");
 			player.rigidbody2D.gravityScale = 2;
 
-			StopCoroutine("AnimateSliding");
-			StopCoroutine ("AnimateWalk");
-
 			if(!jumping)
 			{
-				jumping = true;
 				rigidbody2D.AddForce (Vector3.up * jumphi);
+				jumping = true;
+				StopCoroutine("AnimateSliding");
 				StopCoroutine ("AnimateWalk");
 				StartCoroutine ("AnimateJump");
 				hasDoubleJump = true;
 			}
 			else if (jumping && hasDoubleJump){
+
 				rigidbody2D.velocity = new Vector3(0, 0, 0);
 				rigidbody2D.AddForce(Vector3.up * jumphi / 1.2f);
+				jumping = true;
 				hasDoubleJump = false;
 			}
 		} 
@@ -112,13 +112,13 @@ public class Character : MonoBehaviour
 			{
 				StopCoroutine("AnimateSlide");
 				StartCoroutine("AnimateWalk");
+				walking = true;
 			}
 		}
 	}
 
 	private IEnumerator AnimateWalk()
 	{
-		walking = true;
 
 		foreach(Sprite step in walk)
 		{
@@ -132,8 +132,7 @@ public class Character : MonoBehaviour
 
 	private IEnumerator AnimateJump()
 	{
-		jumping = true;
-		
+
 		foreach(Sprite jumpy in jump)
 		{
 			GetComponent<SpriteRenderer>().sprite = jumpy;	
@@ -148,14 +147,13 @@ public class Character : MonoBehaviour
 				yield return new WaitForSeconds(runSpeed);
 			}
 		}
-		jumping = false;
+
 	}
 
 	private IEnumerator AnimateSlide()
 	{
 		sliding = true;
 		walking = false;
-		jumping = false;
 
 		GameObject player = GameObject.Find ("Player");
 		BoxCollider2D collider = player.GetComponents<BoxCollider2D>()[0];
@@ -194,8 +192,12 @@ public class Character : MonoBehaviour
 
 		particle.enableEmission = false;
 
+
+		gameObject.transform.position = new Vector3 (gameObject.transform.position.x, gameObject.transform.position.y + .3f, gameObject.transform.position.z);
 		collider.center = new Vector2 (collider.center.x, -1.207071f);
 		collider.size = new Vector2 (collider.size.x - 2f, collider.size.y + 8f);
+
+
 		player.rigidbody2D.gravityScale = 2;
 		sliding = false;
 		//StartCoroutine ("AnimateWalk");
