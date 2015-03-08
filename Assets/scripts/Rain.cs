@@ -6,7 +6,6 @@ public class Rain : MonoBehaviour
 	public ParticleSystem particle;
 	public int randTime = 3;
 	public bool raining = false;
-	public bool rainedLast = false;
 
 	public int min = 20;
 	public int max = 30;
@@ -22,16 +21,7 @@ public class Rain : MonoBehaviour
 		{
 			raining = true;
 
-			if(rainedLast)
-			{
-				rainedLast = false;
-				particle.enableEmission = false;
-			}
-			else
-			{
-				rainedLast = true;
-				particle.enableEmission = true;
-			}
+			particle.enableEmission = !particle.enableEmission;
 
 			randTime = Random.Range(min,max);
 

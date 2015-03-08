@@ -9,12 +9,14 @@ public class Character : MonoBehaviour
 	public Sprite[] startSlide = new Sprite[3];
 	public Sprite[] heldSlide = new Sprite[3];
 	public Sprite[] endSlide = new Sprite[3];
+	public Transform blood;
 
 	public bool walking = false;
 	public bool jumping = true;
 	public bool sliding = false;
 	public bool hasDoubleJump = false;
 	public bool grounded = true;
+	public bool colliding = true;
 
 	public float runSpeed = 0.9f;
 	public float jumpSpeed = 0.9f;
@@ -23,25 +25,47 @@ public class Character : MonoBehaviour
 
 	void OnCollisionEnter2D(Collision2D collision) 
 	{
-		if (collision.gameObject.name == "GroundCol") {
+		if (collision.gameObject.name == "GroundCol") 
+		{
 			jumping = false;			
 			walking = false;
 			hasDoubleJump = false;
 			StopCoroutine ("AnimateJump");
 			StopCoroutine("AnimateWalk");
 			StartCoroutine ("AnimateWalk");
-
+			
 		} 
-		else if (collision.gameObject.name == "3Blades(Clone)" || collision.gameObject.name == "Blade" || collision.gameObject.name == "2Blades(Clone)" || collision.gameObject.name == "Blade(Clone)" ) 
-		{
-			Application.LoadLevel(0);
-		}
 	}
 
 	void OnTriggerEnter2D(Collider2D collision)
 	{
-		Destroy (collision.gameObject);
-		score.highScore += 100;
+		string searchStr;
+		if (Random.Range (0, 2) == 1)
+			searchStr = "AudioDroneLeft";
+		else
+			searchStr = "AudioDroneRight";
+
+		GameObject effectAudio = GameObject.Find(searchStr);
+
+		if(collision.gameObject.name == "Crotchet(Clone)")
+		{
+			effectAudio.GetComponent<effectPlayer>().playEffect();
+			Destroy (collision.gameObject);
+			score.highScore += 100;
+		}
+		else if ((collision.gameObject.name == "3Blades(Clone)" || collision.gameObject.name == "Blade" || collision.gameObject.name == "2Blades(Clone)" || collision.gameObject.name == "Blade(Clone)" ) && colliding) 
+		{
+			effectAudio.GetComponent<effectPlayer>().playEffect(0);
+			Instantiate(blood, gameObject.transform.position, Quaternion.identity);
+			gameObject.renderer.enabled = false;
+			StartCoroutine(endRun());
+		}
+	}
+
+	private IEnumerator endRun(){
+		colliding = false;
+		yield return new WaitForSeconds(1f);
+		Application.LoadLevel(0);
 	}
 
 	void Update()
@@ -51,13 +75,17 @@ public class Character : MonoBehaviour
 		if (Input.GetKeyDown (KeyCode.W))
 		{	
 			sliding = false;
+			walking =  false;
+
 			GameObject player = GameObject.Find ("Player");
+			player.rigidbody2D.gravityScale = 2;
+
 			StopCoroutine("AnimateSliding");
 			StopCoroutine ("AnimateWalk");
 
 			if(!jumping)
 			{
-				player.rigidbody2D.gravityScale = 2;
+				jumping = true;
 				rigidbody2D.AddForce (Vector3.up * jumphi);
 				StopCoroutine ("AnimateWalk");
 				StartCoroutine ("AnimateJump");
@@ -66,8 +94,6 @@ public class Character : MonoBehaviour
 			else if (jumping && hasDoubleJump){
 				rigidbody2D.velocity = new Vector3(0, 0, 0);
 				rigidbody2D.AddForce(Vector3.up * jumphi / 1.2f);
-				//StopCoroutine("AnimateJump");
-				//StartCoroutine("AnimateJump");
 				hasDoubleJump = false;
 			}
 		} 
@@ -142,7 +168,6 @@ public class Character : MonoBehaviour
 
 		foreach (Sprite sl in startSlide) 
 		{
-
 			GetComponent<SpriteRenderer>().sprite = sl;
 			yield return new WaitForSeconds(slideSpeed);
 		}
