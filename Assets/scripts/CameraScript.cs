@@ -9,6 +9,7 @@ public class CameraScript : MonoBehaviour {
 		GameObject audio = GameObject.Find ("AudioDrone");
 		audio.transform.position = transform.position;
 
+
 	}
 	// Update is called once per frame
 	void Update () {

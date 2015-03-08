@@ -10,7 +10,7 @@ public class crotchetTTL : MonoBehaviour {
 	
 	// Update is called once per frame
 	private IEnumerator TTL(){
-		yield return new WaitForSeconds(6f);
+		yield return new WaitForSeconds(4f);
 		Destroy (gameObject);
 	}
 }
