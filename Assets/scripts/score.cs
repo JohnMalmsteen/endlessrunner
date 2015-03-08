@@ -6,11 +6,11 @@ using UnityEngine.UI;
 public class score : MonoBehaviour 
 {
 	public Text scoreText;
-	private int highScore;
+	public static int highScore;
 
 	void Start()
 	{
-
+		highScore = 0;
 	}
 
 	void Update () 
@@ -30,5 +30,9 @@ public class score : MonoBehaviour
 		yield return new WaitForSeconds(1);
 
 		highScore += 1;
+	}
+
+	public void bonus(){
+		highScore += 100;
 	}
 }

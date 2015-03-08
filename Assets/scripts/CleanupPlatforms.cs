@@ -3,15 +3,20 @@ using System.Collections;
 
 public class CleanupPlatforms : MonoBehaviour 
 {
-	void Start () 
+	void OnCollisionEnter2D(Collision2D ob)
 	{
-		StartCoroutine("clean");
-	}
+		string obName = ob.gameObject.name;
 
-	private IEnumerator clean()
-	{
-		yield return new WaitForSeconds(5);
+		GameObject backSpawner = GameObject.Find("BackgroundSpawner");
+		GameObject backKiller = GameObject.Find ("KillBackgroundCloud");
+		backKiller.transform.position = new Vector3 (-48.12f, 4.8f, 0);
+
+		SpawnPlatforms spwn = backSpawner.GetComponent<SpawnPlatforms>();
 		
-		Destroy (gameObject);
+		if (obName == "GroundLong(Clone)" || obName == "GroundLong") 
+		{
+			spwn.spawnPlatform();
+			Destroy(ob.gameObject);
+		}
 	}
 }

@@ -6,29 +6,11 @@ public class SpawnPlatforms : MonoBehaviour
 	private static int PLATFORMS_MAX = 6;
 	private bool spawning = false;
 
-	public GameObject []platforms = new GameObject[PLATFORMS_MAX];
-	public float spawnTime = 1.5f;
+	public Transform platformBlock;
 
-	void Update () 
-	{
-		StartCoroutine("Spawn");
-	}
+	public Vector3 spwn_platforms;
 
-	private IEnumerator Spawn()
-	{
-		if (!spawning)
-		{
-			spawning = true;
-
-			int randPlat = Random.Range (0, PLATFORMS_MAX);
-			float randHeight;
-			Vector3 myPos = new Vector3(11f,-5.624582f,0);
-
-			Instantiate(platforms[randPlat], myPos, Quaternion.identity);
-
-			yield return new WaitForSeconds (spawnTime);
-
-			spawning = false;
-		}
+	public void spawnPlatform(){
+		Instantiate(platformBlock, spwn_platforms, Quaternion.identity);
 	}
 }
