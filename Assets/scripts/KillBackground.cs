@@ -3,10 +3,6 @@ using System.Collections;
 
 public class KillBackground : MonoBehaviour
 {
-
-	
-
-
 	void OnTriggerEnter2D(Collider2D ob)
 	{
 
@@ -14,7 +10,6 @@ public class KillBackground : MonoBehaviour
 		GameObject backSpawner = GameObject.Find ("BackgroundSpawner");
 		
 		BackgroundSpawn spwn = backSpawner.GetComponent<BackgroundSpawn>();
-		Cloud cloud = backSpawner.GetComponent<Cloud>();
 
 		if (obName == "mountainLeft" || obName == "backLeft(Clone)" || obName == "backRight(Clone)" || obName == "backLeft" || obName == "backRight") 
 		{

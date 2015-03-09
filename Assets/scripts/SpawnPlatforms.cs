@@ -3,14 +3,12 @@ using System.Collections;
 
 public class SpawnPlatforms : MonoBehaviour 
 {
-	private static int PLATFORMS_MAX = 6;
-	private bool spawning = false;
-
 	public Transform platformBlock;
 	public GameObject lastCreated;
 	public Vector3 spwn_platforms;
 
-	void Start(){
+	void Start()
+	{
 		lastCreated = GameObject.Find ("GroundLongspec");
 	}
 

@@ -72,7 +72,7 @@ public class Character : MonoBehaviour
 	{
 		///transform.position = new Vector3(transform.position.x + .2f, transform.position.y, transform.position.z);
 
-		if (Input.GetKeyDown (KeyCode.W))
+		if (Input.GetKeyDown (KeyCode.W) || Input.GetMouseButtonDown(0))
 		{	
 			sliding = false;
 			walking =  false;

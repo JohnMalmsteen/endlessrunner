@@ -11,14 +11,12 @@ public class DayNight : MonoBehaviour
 
 	public int slow = 20;		
 	public Camera cam;
-	GameObject circle;
 	Color currentCircle,currentBack;
 	SpriteRenderer spriteRenderer;
 
 	void Start()
 	{
 		spriteRenderer = GetComponent<SpriteRenderer>();
-		circle = GameObject.Find ("Circle");
 	}
 
 	void Update()

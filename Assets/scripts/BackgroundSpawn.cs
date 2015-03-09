@@ -75,7 +75,6 @@ public class BackgroundSpawn : MonoBehaviour
 	public void spawnCloud()
 	{
 		int selector = Random.Range (0, 2);
-		int height = Random.Range (0, 2);
 		
 		Vector3 [] vecs = {spwn_cloud_high, spwn_cloud_mid, spwn_cloud_low};
 		
