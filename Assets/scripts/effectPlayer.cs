@@ -9,6 +9,7 @@ public class effectPlayer : MonoBehaviour {
 	public void playEffect(int i)
 	{
 		AudioSource eAudio = gameObject.GetComponent<AudioSource>();
+		eAudio.volume = 100;
 		eAudio.PlayOneShot (effects [i]);
 	}
 

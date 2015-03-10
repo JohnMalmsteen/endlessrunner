@@ -10,6 +10,7 @@ public class Character : MonoBehaviour
 	public Sprite[] heldSlide = new Sprite[3];
 	public Sprite[] endSlide = new Sprite[3];
 	public Transform blood;
+	public Transform coinExplosion;
 
 	public bool walking = false;
 	public bool jumping = true;
@@ -50,6 +51,8 @@ public class Character : MonoBehaviour
 		if(collision.gameObject.name == "Crotchet(Clone)")
 		{
 			effectAudio.GetComponent<effectPlayer>().playEffect();
+			collision.gameObject.renderer.enabled = false;
+			Instantiate(coinExplosion, collision.gameObject.transform.position, Quaternion.identity);
 			Destroy (collision.gameObject);
 			score.highScore += 100;
 		}
@@ -71,8 +74,8 @@ public class Character : MonoBehaviour
 	void Update()
 	{
 		///transform.position = new Vector3(transform.position.x + .2f, transform.position.y, transform.position.z);
-
-		if (Input.GetKeyDown (KeyCode.W) || Input.GetMouseButtonDown(0))
+		Rect bounds = new Rect(0, 0, Screen.width/2, Screen.height);
+		if (Input.GetKeyDown (KeyCode.W) || (Input.GetMouseButtonDown(0) && !bounds.Contains(Input.mousePosition)))
 		{	
 			sliding = false;
 			walking =  false;
@@ -97,7 +100,7 @@ public class Character : MonoBehaviour
 				hasDoubleJump = false;
 			}
 		} 
-		else if(Input.GetKeyDown(KeyCode.S))
+		else if(Input.GetKeyDown(KeyCode.S) || (Input.GetMouseButtonDown(0) && bounds.Contains(Input.mousePosition)))
 		{
 			if(!sliding && !jumping)
 			{	
@@ -182,7 +185,7 @@ public class Character : MonoBehaviour
 			}else{
 				break;
 			}
-		} while (Input.GetKey(KeyCode.S));
+		} while (Input.GetKey(KeyCode.S) || Input.GetMouseButton(0));
 
 		foreach(Sprite sl in endSlide)
 		{
