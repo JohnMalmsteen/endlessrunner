@@ -68,6 +68,7 @@ public class Character : MonoBehaviour
 	private IEnumerator endRun(){
 		colliding = false;
 		yield return new WaitForSeconds(1f);
+		PlayerPrefs.SetInt("LASTSCORE",score.highScore);
 		Application.LoadLevel(0);
 	}
 
