@@ -31,6 +31,7 @@ public class Character : MonoBehaviour
 			jumping = false;			
 			walking = false;
 			hasDoubleJump = false;
+			grounded = true;
 			StopCoroutine ("AnimateJump");
 			StopCoroutine("AnimateWalk");
 			//StartCoroutine ("AnimateWalk");
@@ -61,6 +62,10 @@ public class Character : MonoBehaviour
 			effectAudio.GetComponent<effectPlayer>().playEffect(0);
 			Instantiate(blood, gameObject.transform.position, Quaternion.identity);
 			gameObject.renderer.enabled = false;
+			gameObject.rigidbody2D.gravityScale = 0;
+			gameObject.collider2D.enabled = false;
+			GameObject particle = GameObject.Find("Particles");
+			Destroy(particle);
 			StartCoroutine(endRun());
 		}
 	}
@@ -68,7 +73,13 @@ public class Character : MonoBehaviour
 	private IEnumerator endRun(){
 		colliding = false;
 		yield return new WaitForSeconds(1f);
-		PlayerPrefs.SetInt("LASTSCORE",score.highScore);
+		PlayerPrefs.SetInt ("LASTSCORE", score.highScore);
+
+		if(PlayerPrefs.GetInt("HIGHSCORE") < score.highScore)
+		{
+			PlayerPrefs.SetInt("HIGHSCORE", score.highScore);
+		}
+
 		Application.LoadLevel(0);
 	}
 
@@ -80,7 +91,7 @@ public class Character : MonoBehaviour
 		{	
 			sliding = false;
 			walking =  false;
-
+			grounded = false;
 			GameObject player = GameObject.Find ("Player");
 			player.rigidbody2D.gravityScale = 2;
 
@@ -101,7 +112,7 @@ public class Character : MonoBehaviour
 				hasDoubleJump = false;
 			}
 		} 
-		else if(Input.GetKeyDown(KeyCode.S) || (Input.GetMouseButtonDown(0) && bounds.Contains(Input.mousePosition)))
+		else if((Input.GetKey(KeyCode.S)&&grounded) || ((Input.GetMouseButton(0) && bounds.Contains(Input.mousePosition))&&grounded))
 		{
 			if(!sliding && !jumping)
 			{	
@@ -166,7 +177,8 @@ public class Character : MonoBehaviour
 		collider.size = new Vector2 (collider.size.x + 2f, collider.size.y - 8f);
 		collider.center = new Vector2 (collider.center.x, -4.61f);
 
-		particle.enableEmission = true;
+		if (particle != null)
+			particle.enableEmission = true;
 
 		foreach (Sprite sl in startSlide) 
 		{
@@ -194,7 +206,8 @@ public class Character : MonoBehaviour
 			yield return new WaitForSeconds(slideSpeed);
 		}
 
-		particle.enableEmission = false;
+		if (particle != null)
+			particle.enableEmission = false;
 
 
 		gameObject.transform.position = new Vector3 (gameObject.transform.position.x, gameObject.transform.position.y + .3f, gameObject.transform.position.z);

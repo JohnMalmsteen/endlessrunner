@@ -33,6 +33,6 @@ public class score : MonoBehaviour
 	}
 
 	public void bonus(){
-		highScore += 100;
+		highScore += 500;
 	}
 }

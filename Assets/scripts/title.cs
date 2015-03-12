@@ -10,11 +10,10 @@ public class title : MonoBehaviour
 	public bool sliding = false;
 	public Text highText;
 	public Text lastScore;
-
 	void Start()
 	{
-		lastScore.text = "Last Score: " + PlayerPrefs.GetInt ("LASTSCORE");
 		highText.text = "High score: " + PlayerPrefs.GetInt("HIGHSCORE");
+		lastScore.text = "Last score: " + PlayerPrefs.GetInt ("LASTSCORE");
 	}
 
 	void Update()
