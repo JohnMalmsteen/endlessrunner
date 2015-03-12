@@ -7,4 +7,12 @@ public class Mobile : MonoBehaviour
 	{
 		Screen.orientation = ScreenOrientation.LandscapeLeft;
 	}
+
+	void Update()
+	{
+		if (Input.GetKeyDown(KeyCode.Escape)) 
+		{
+			Application.Quit();
+		}
+	}
 }

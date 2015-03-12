@@ -10,6 +10,7 @@ public class title : MonoBehaviour
 	public bool sliding = false;
 	public Text highText;
 	public Text lastScore;
+
 	void Start()
 	{
 		highText.text = "High score: " + PlayerPrefs.GetInt("HIGHSCORE");
@@ -20,20 +21,37 @@ public class title : MonoBehaviour
 	{
 		StartCoroutine(AnimateSlide());
 	}
+
 	
 	private IEnumerator AnimateSlide()
 	{	
 		if (!sliding)
 		{
 			sliding = true;
-
+			
 			foreach (Sprite sl in slide)
 			{
 				titleChar.GetComponent<SpriteRenderer> ().sprite = sl;
 				yield return new WaitForSeconds (slideSpeed);
 			}
-
+			
 			sliding = false;
 		}
 	}
+
+	public void ExitGame()
+	{
+		Application.Quit();
+	}
+
+	public void PlayGame()
+	{
+		Application.LoadLevel(1);
+	}
+
+	public void GoCredits()
+	{
+		Application.LoadLevel(2);
+	}
 }
+
