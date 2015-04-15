@@ -24,6 +24,7 @@ public class Character : MonoBehaviour
 	public float slideSpeed = 0.7f;
 	public float jumphi = 200;
 
+
 	void OnCollisionEnter2D(Collision2D collision) 
 	{
 		if (collision.gameObject.name == "GroundCol") 
@@ -52,7 +53,7 @@ public class Character : MonoBehaviour
 		if(collision.gameObject.name == "Crotchet(Clone)")
 		{
 			effectAudio.GetComponent<effectPlayer>().playEffect();
-			collision.gameObject.renderer.enabled = false;
+			collision.gameObject.GetComponent<Renderer>().enabled = false;
 			Instantiate(coinExplosion, collision.gameObject.transform.position, Quaternion.identity);
 			Destroy (collision.gameObject);
 			score.highScore += 100;
@@ -61,12 +62,13 @@ public class Character : MonoBehaviour
 		{
 			effectAudio.GetComponent<effectPlayer>().playEffect(0);
 			Instantiate(blood, gameObject.transform.position, Quaternion.identity);
-			gameObject.renderer.enabled = false;
-			gameObject.rigidbody2D.gravityScale = 0;
-			gameObject.collider2D.enabled = false;
+			gameObject.GetComponent<Renderer>().enabled = false;
+			gameObject.GetComponent<Rigidbody2D>().gravityScale = 0;
+			gameObject.GetComponent<Collider2D>().enabled = false;
 			GameObject particle = GameObject.Find("Particles");
 			Destroy(particle);
 			StartCoroutine(endRun());
+
 		}
 	}
 
@@ -74,11 +76,16 @@ public class Character : MonoBehaviour
 		colliding = false;
 		yield return new WaitForSeconds(1f);
 		PlayerPrefs.SetInt ("LASTSCORE", score.highScore);
-
+		int endScore = PlayerPrefs.GetInt("HIGHSCORE");
 		if(PlayerPrefs.GetInt("HIGHSCORE") < score.highScore)
 		{
 			PlayerPrefs.SetInt("HIGHSCORE", score.highScore);
+			endScore = PlayerPrefs.GetInt("HIGHSCORE");
 		}
+
+		http httpPost = new http ();
+
+		StartCoroutine(httpPost.CloudThing(endScore));
 
 		Application.LoadLevel(0);
 	}
@@ -93,11 +100,11 @@ public class Character : MonoBehaviour
 			walking =  false;
 			grounded = false;
 			GameObject player = GameObject.Find ("Player");
-			player.rigidbody2D.gravityScale = 2;
+			player.GetComponent<Rigidbody2D>().gravityScale = 2;
 
 			if(!jumping)
 			{
-				rigidbody2D.AddForce (Vector3.up * jumphi);
+				GetComponent<Rigidbody2D>().AddForce (Vector3.up * jumphi);
 				jumping = true;
 				StopCoroutine("AnimateSliding");
 				StopCoroutine ("AnimateWalk");
@@ -106,8 +113,8 @@ public class Character : MonoBehaviour
 			}
 			else if (jumping && hasDoubleJump){
 
-				rigidbody2D.velocity = new Vector3(0, 0, 0);
-				rigidbody2D.AddForce(Vector3.up * jumphi / 1.2f);
+				GetComponent<Rigidbody2D>().velocity = new Vector3(0, 0, 0);
+				GetComponent<Rigidbody2D>().AddForce(Vector3.up * jumphi / 1.2f);
 				jumping = true;
 				hasDoubleJump = false;
 			}
@@ -173,9 +180,9 @@ public class Character : MonoBehaviour
 		GameObject player = GameObject.Find ("Player");
 		BoxCollider2D collider = player.GetComponents<BoxCollider2D>()[0];
 
-		player.rigidbody2D.gravityScale = 0;
+		player.GetComponent<Rigidbody2D>().gravityScale = 0;
 		collider.size = new Vector2 (collider.size.x + 2f, collider.size.y - 8f);
-		collider.center = new Vector2 (collider.center.x, -4.61f);
+		collider.offset = new Vector2 (collider.offset.x, -4.61f);
 
 		if (particle != null)
 			particle.enableEmission = true;
@@ -211,11 +218,11 @@ public class Character : MonoBehaviour
 
 
 		gameObject.transform.position = new Vector3 (gameObject.transform.position.x, gameObject.transform.position.y + .3f, gameObject.transform.position.z);
-		collider.center = new Vector2 (collider.center.x, -1.207071f);
+		collider.offset = new Vector2 (collider.offset.x, -1.207071f);
 		collider.size = new Vector2 (collider.size.x - 2f, collider.size.y + 8f);
 
 
-		player.rigidbody2D.gravityScale = 2;
+		player.GetComponent<Rigidbody2D>().gravityScale = 2;
 		sliding = false;
 		//StartCoroutine ("AnimateWalk");
 	}

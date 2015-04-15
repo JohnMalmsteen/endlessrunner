@@ -14,19 +14,19 @@ public class bloodSpurt : MonoBehaviour
 		switch (dir)
 		{
 			case 0:
-				rigidbody2D.AddForce(Vector3.up * force);
+				GetComponent<Rigidbody2D>().AddForce(Vector3.up * force);
 				break;
 
 			case 1:
-				rigidbody2D.AddForce(Vector3.down * force);
+				GetComponent<Rigidbody2D>().AddForce(Vector3.down * force);
 				break;
 
 			case 2:
-				rigidbody2D.AddForce(Vector3.left * force);
+				GetComponent<Rigidbody2D>().AddForce(Vector3.left * force);
 				break;
 
 			case 3:
-				rigidbody2D.AddForce(Vector3.right * force);
+				GetComponent<Rigidbody2D>().AddForce(Vector3.right * force);
 				break;
 		}
 
