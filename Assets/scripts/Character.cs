@@ -24,6 +24,8 @@ public class Character : MonoBehaviour
 	public float slideSpeed = 0.7f;
 	public float jumphi = 200;
 
+	public http httpPost;
+
 
 	void OnCollisionEnter2D(Collision2D collision) 
 	{
@@ -83,7 +85,7 @@ public class Character : MonoBehaviour
 			endScore = PlayerPrefs.GetInt("HIGHSCORE");
 		}
 
-		http httpPost = new http ();
+		httpPost = gameObject.AddComponent <http>() as http;
 
 		StartCoroutine(httpPost.CloudThing(endScore));
 

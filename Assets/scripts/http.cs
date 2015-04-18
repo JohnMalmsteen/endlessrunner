@@ -5,7 +5,7 @@ public class http : MonoBehaviour {
 
 	private string postURL = "https://riggscores1337.herokuapp.com/scores";
 	private string username = "XXX";
-	private int score = 666666;
+	private int score = 777777;
 
 	private string _player = "";
 	
@@ -23,7 +23,6 @@ public class http : MonoBehaviour {
 		Debug.Log ("Form");
 		// Create a download object
 		WWW www = new WWW( postURL, form );
-		Debug.Log ("WWW");
 		// Wait until the download is done
 		yield return www;
 		Debug.Log ("Yield");
