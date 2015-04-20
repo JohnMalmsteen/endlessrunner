@@ -59,6 +59,7 @@
      <Compile Include="Assets\scripts\KillBackground.cs" />
      <Compile Include="Assets\scripts\Mobile.cs" />
      <Compile Include="Assets\scripts\Rain.cs" />
+     <Compile Include="Assets\scripts\SimpleJSON.cs" />
      <Compile Include="Assets\scripts\SpawnBlades.cs" />
      <Compile Include="Assets\scripts\SpawnPlatforms.cs" />
      <Compile Include="Assets\scripts\StatManager.cs" />

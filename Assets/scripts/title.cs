@@ -2,6 +2,7 @@
 using System.Collections;
 using UnityEngine.UI;
 
+
 public class title : MonoBehaviour 
 {
 	public GameObject titleChar;
@@ -10,9 +11,17 @@ public class title : MonoBehaviour
 	public bool sliding = false;
 	public Text highText;
 	public Text lastScore;
+	public http httpPost;
 
 	void Start()
 	{
+		Debug.Log ("title start");
+		httpPost = gameObject.AddComponent <http>() as http;
+		int endScore = PlayerPrefs.GetInt("HIGHSCORE");
+		string username = "aaa";
+		StartCoroutine(httpPost.UpdateScores(endScore, username));
+
+
 		highText.text = "High score: " + PlayerPrefs.GetInt("HIGHSCORE");
 		lastScore.text = "Last score: " + PlayerPrefs.GetInt ("LASTSCORE");
 	}

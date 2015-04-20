@@ -78,16 +78,10 @@ public class Character : MonoBehaviour
 		colliding = false;
 		yield return new WaitForSeconds(1f);
 		PlayerPrefs.SetInt ("LASTSCORE", score.highScore);
-		int endScore = PlayerPrefs.GetInt("HIGHSCORE");
 		if(PlayerPrefs.GetInt("HIGHSCORE") < score.highScore)
 		{
 			PlayerPrefs.SetInt("HIGHSCORE", score.highScore);
-			endScore = PlayerPrefs.GetInt("HIGHSCORE");
 		}
-
-		httpPost = gameObject.AddComponent <http>() as http;
-
-		StartCoroutine(httpPost.CloudThing(endScore));
 
 		Application.LoadLevel(0);
 	}
