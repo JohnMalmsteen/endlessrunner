@@ -4,8 +4,9 @@ using SimpleJSON;
 
 public class http : MonoBehaviour {
 
-	//private string postURL = "https://riggscores1337.herokuapp.com/scores";
-	private string postURL = "http://localhost:8080/scores";
+	private string postURL = "https://riggscores1337.herokuapp.com/scores";
+	private string[] usernames = new string[10]; 
+	private string[] scores = new string[10]; 
 
 	public IEnumerator UpdateScores (int score, string username) {
 		// Create a form object for sending high score data to the server
@@ -28,14 +29,21 @@ public class http : MonoBehaviour {
 		} else {
 			// show the highscores
 			var N = JSON.Parse(www.text);
-			Debug.Log(N);
-			Debug.Log(N[1]["username"]);
-		}
-	}
 
-	// Update is called once per frame
-	void Update () {
-	
+			for(int i = 0; i < 10; i++){
+				usernames[i] = N[i]["username"];
+				scores[i] = N[i]["score"];
+			}
+
+			foreach(var s in scores){
+				Debug.Log (s);
+			}
+
+			foreach(var u in usernames){
+				Debug.Log (u);
+			}
+
+		}
 	}
 
 	public string Md5Sum(string strToEncrypt){
