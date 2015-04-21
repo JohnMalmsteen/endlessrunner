@@ -6,7 +6,7 @@ public class http : MonoBehaviour {
 
 	private string postURL = "https://riggscores1337.herokuapp.com/scores";
 	private string[] usernames = new string[10]; 
-	private string[] scores = new string[10]; 
+	private string[] scores = new string[10];
 
 	public IEnumerator UpdateScores (int score, string username) {
 		// Create a form object for sending high score data to the server
@@ -35,15 +35,20 @@ public class http : MonoBehaviour {
 				scores[i] = N[i]["score"];
 			}
 
-			foreach(var s in scores){
-				Debug.Log (s);
+			if(score > int.Parse(scores[scores.Length-1])){
+				PlayerPrefsX.SetStringArray("Names", usernames);
+				PlayerPrefsX.SetStringArray("Scores", scores);
+				Highscores();
+			} else {
+				Debug.Log ("Not Highscore");
 			}
-
-			foreach(var u in usernames){
-				Debug.Log (u);
-			}
-
 		}
+	}
+
+	public void Highscores(){
+		Application.LoadLevel(3);
+		//string[] tempscore = PlayerPrefsX.GetStringArray("Names");
+		//Debug.Log (tempscore[1]);
 	}
 
 	public string Md5Sum(string strToEncrypt){

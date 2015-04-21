@@ -17,20 +17,32 @@ public class StatManager : MonoBehaviour
 	public Text scr_8;
 	public Text scr_9;
 	public Text scr_10;
+
+	private string[] usernames = new string[10];
+	private string[] scores = new string[10];
 		
-	void Start ()
-	{
-		PlayerPrefs.DeleteAll(); // Remove for production
+	void Start (){
+		Debug.Log("hey");
+		usernames = PlayerPrefsX.GetStringArray ("Names");
+		scores = PlayerPrefsX.GetStringArray ("Scores");
 
-		if(PlayerPrefs.GetInt("App First") != EXIST)
-		{		
-			init();
-
-			PlayerPrefs.SetInt("App First",EXIST);
-		}
+		updateBoard ();
 	}
 
-	void init()
+	void updateBoard(){
+		scr_1.text = usernames[0] + " : " + scores[0];
+		scr_2.text = usernames[1] + " : " + scores[1];
+		scr_3.text = usernames[2] + " : " + scores[2];
+		scr_4.text = usernames[3] + " : " + scores[3];
+		scr_5.text = usernames[4] + " : " + scores[4];
+		scr_6.text = usernames[5] + " : " + scores[5];
+		scr_7.text = usernames[6] + " : " + scores[6];
+		scr_8.text = usernames[7] + " : " + scores[7];
+		scr_9.text = usernames[8] + " : " + scores[8];
+		scr_10.text = usernames[9] + " : " + scores[9];
+	}
+
+	/*void init()
 	{
 		int j = 1;
 
@@ -50,19 +62,7 @@ public class StatManager : MonoBehaviour
 		updateBoard();
 	}
 
-	void updateBoard()
-	{
-		scr_1.text = PlayerPrefs.GetInt("Score:1").ToString();
-		scr_2.text = PlayerPrefs.GetInt("Score:2").ToString();
-		scr_3.text = PlayerPrefs.GetInt("Score:3").ToString();
-		scr_4.text = PlayerPrefs.GetInt("Score:4").ToString();
-		scr_5.text = PlayerPrefs.GetInt("Score:5").ToString();
-		scr_6.text = PlayerPrefs.GetInt("Score:6").ToString();
-		scr_7.text = PlayerPrefs.GetInt("Score:7").ToString();
-		scr_8.text = PlayerPrefs.GetInt("Score:8").ToString();
-		scr_9.text = PlayerPrefs.GetInt("Score:9").ToString();
-		scr_10.text = PlayerPrefs.GetInt("Score:10").ToString();
-	}
+
 
 	void setScore(int score)
 	{
@@ -105,6 +105,6 @@ public class StatManager : MonoBehaviour
 			
 			j--;
 		}
-	}
+	}*/
 
 }

@@ -17,13 +17,13 @@ public class title : MonoBehaviour
 	{
 		Debug.Log ("title start");
 		httpPost = gameObject.AddComponent <http>() as http;
-		int endScore = PlayerPrefs.GetInt("HIGHSCORE");
+		//int endScore = PlayerPrefs.GetInt("HIGHSCORE");
+		int endScore = 888890;
 		string username = "aaa";
 		StartCoroutine(httpPost.UpdateScores(endScore, username));
 
-
 		highText.text = "High score: " + PlayerPrefs.GetInt("HIGHSCORE");
-		lastScore.text = "Last score: " + PlayerPrefs.GetInt ("LASTSCORE");
+		lastScore.text = "Last score: " + PlayerPrefs.GetInt("LASTSCORE");
 	}
 
 	void Update()
@@ -62,5 +62,7 @@ public class title : MonoBehaviour
 	{
 		Application.LoadLevel(2);
 	}
+
+
 }
 
