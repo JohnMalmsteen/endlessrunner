@@ -15,11 +15,12 @@ public class title : MonoBehaviour
 
 	void Start()
 	{
+		//PlayerPrefs.DeleteAll ();
 		Debug.Log ("title start");
 		httpPost = gameObject.AddComponent <http>() as http;
-		//int endScore = PlayerPrefs.GetInt("HIGHSCORE");
-		int endScore = 888890;
-		string username = "aaa";
+		int endScore = PlayerPrefs.GetInt("HIGHSCORE");
+		//int endScore = 888890;
+		string username = "abc";
 		StartCoroutine(httpPost.UpdateScores(endScore, username));
 
 		highText.text = "High score: " + PlayerPrefs.GetInt("HIGHSCORE");

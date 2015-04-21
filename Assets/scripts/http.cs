@@ -9,11 +9,12 @@ public class http : MonoBehaviour {
 	private string[] scores = new string[10];
 
 	public IEnumerator UpdateScores (int score, string username) {
+
 		// Create a form object for sending high score data to the server
 		WWWForm form = new WWWForm();
 
 		string secret = Md5Sum (username + score);
-
+		Debug.Log (secret);
 		form.AddField("app", secret);
 		
 		form.AddField("username", username);
@@ -33,6 +34,7 @@ public class http : MonoBehaviour {
 			for(int i = 0; i < 10; i++){
 				usernames[i] = N[i]["username"];
 				scores[i] = N[i]["score"];
+				Debug.Log(scores[i]);
 			}
 
 			if(score > int.Parse(scores[scores.Length-1])){
