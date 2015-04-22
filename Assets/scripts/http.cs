@@ -8,8 +8,9 @@ public class http : MonoBehaviour {
 	private string[] usernames = new string[10]; 
 	private string[] scores = new string[10];
 
-	public IEnumerator UpdateScores (int score, string username) {
+	public IEnumerator UpdateScores (int score) {
 
+		string username = "abc";
 		// Create a form object for sending high score data to the server
 		WWWForm form = new WWWForm();
 
@@ -34,21 +35,13 @@ public class http : MonoBehaviour {
 			for(int i = 0; i < 10; i++){
 				usernames[i] = N[i]["username"];
 				scores[i] = N[i]["score"];
-				Debug.Log(scores[i]);
 			}
+			Debug.Log (score);
+			Debug.Log (int.Parse(scores[scores.Length-1]));
 
-			if(score > int.Parse(scores[scores.Length-1])){
-				PlayerPrefsX.SetStringArray("Names", usernames);
-				PlayerPrefsX.SetStringArray("Scores", scores);
-				Highscores();
-			} else {
-				Debug.Log ("Not Highscore");
-			}
+			PlayerPrefsX.SetStringArray("Names", usernames);
+			PlayerPrefsX.SetStringArray("Scores", scores);
 		}
-	}
-
-	public void Highscores(){
-		Application.LoadLevel(3);
 	}
 
 	public string Md5Sum(string strToEncrypt){

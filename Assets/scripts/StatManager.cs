@@ -17,6 +17,7 @@ public class StatManager : MonoBehaviour
 	public Text scr_8;
 	public Text scr_9;
 	public Text scr_10;
+	public Text name;
 
 	private string[] usernames = new string[10];
 	private string[] scores = new string[10];
@@ -27,6 +28,10 @@ public class StatManager : MonoBehaviour
 		scores = PlayerPrefsX.GetStringArray ("Scores");
 
 		updateBoard ();
+	}
+
+	void Update(){
+		Debug.Log (name);
 	}
 
 	void updateBoard(){
