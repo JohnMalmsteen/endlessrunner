@@ -49,8 +49,6 @@ public class http : MonoBehaviour {
 
 	public void Highscores(){
 		Application.LoadLevel(3);
-		//string[] tempscore = PlayerPrefsX.GetStringArray("Names");
-		//Debug.Log (tempscore[1]);
 	}
 
 	public string Md5Sum(string strToEncrypt){
