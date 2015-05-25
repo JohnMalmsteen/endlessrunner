@@ -12,6 +12,7 @@ public class title : MonoBehaviour
 	public Text highText;
 	public Text lastScore;
 	public http httpPost;
+	public int prev = 0;
 
 	void Start()
 	{
@@ -29,15 +30,6 @@ public class title : MonoBehaviour
 		highText.text = "High score: " + PlayerPrefs.GetInt("HIGHSCORE");
 		lastScore.text = "Last score: " + PlayerPrefs.GetInt("LASTSCORE");
 
-		if(endScore > int.Parse(scores[scores.Length-1])){
-			//get username
-			//recall http
-			//call highscores
-		}
-	}
-		
-	public void Highscores(){
-		Application.LoadLevel(3);
 	}
 
 	void Update()
@@ -77,6 +69,10 @@ public class title : MonoBehaviour
 		Application.LoadLevel(2);
 	}
 
+	public void Highscores(){
+		Application.LoadLevel(3);
+	}
+	
 
 }
 

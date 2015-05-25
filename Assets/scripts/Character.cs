@@ -18,6 +18,7 @@ public class Character : MonoBehaviour
 	public bool hasDoubleJump = false;
 	public bool grounded = true;
 	public bool colliding = true;
+	public bool scorecheck = false;
 
 	public float runSpeed = 0.9f;
 	public float jumpSpeed = 0.9f;
@@ -26,6 +27,7 @@ public class Character : MonoBehaviour
 
 	public http httpPost;
 
+	private string[] scores = new string[10];
 
 	void OnCollisionEnter2D(Collision2D collision) 
 	{
@@ -75,15 +77,31 @@ public class Character : MonoBehaviour
 	}
 
 	private IEnumerator endRun(){
+
 		colliding = false;
 		yield return new WaitForSeconds(1f);
+		scores = PlayerPrefsX.GetStringArray("Scores");
 		PlayerPrefs.SetInt ("LASTSCORE", score.highScore);
+
 		if(PlayerPrefs.GetInt("HIGHSCORE") < score.highScore)
 		{
 			PlayerPrefs.SetInt("HIGHSCORE", score.highScore);
 		}
 
-		Application.LoadLevel(0);
+		foreach (string s in scores) {
+			if( PlayerPrefs.GetInt("LASTSCORE") == System.Convert.ToInt32(s)){
+				scorecheck = true;
+			}
+		}
+
+		Debug.Log ("out");
+
+		if(PlayerPrefs.GetInt("LASTSCORE") > int.Parse(scores[scores.Length-1]) && scorecheck == false){
+			Application.LoadLevel(3);
+		} else{
+			Application.LoadLevel(0);
+		}
+
 	}
 
 	void Update()

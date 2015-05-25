@@ -4,13 +4,19 @@ using SimpleJSON;
 
 public class http : MonoBehaviour {
 
-	private string postURL = "https://riggscores1337.herokuapp.com/scores";
+	//private string postURL = "https://riggscores1337.herokuapp.com/scores";
+
+	private string postScoreURL = "https://riggscores1337.herokuapp.com/scores";
+
 	private string[] usernames = new string[10]; 
 	private string[] scores = new string[10];
 
 	public IEnumerator UpdateScores (int score) {
 
-		string username = "abc";
+		string username = PlayerPrefs.GetString ("username");
+		if (string.IsNullOrEmpty(username) == true) {
+			username = "ANON";
+		}
 		// Create a form object for sending high score data to the server
 		WWWForm form = new WWWForm();
 
@@ -22,7 +28,7 @@ public class http : MonoBehaviour {
 		// The score
 		form.AddField("score", score);
 		// Create a download object
-		WWW www = new WWW( postURL, form );
+		WWW www = new WWW( postScoreURL, form );
 		// Wait until the download is done
 		yield return www;
 
