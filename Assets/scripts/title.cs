@@ -30,7 +30,9 @@ public class title : MonoBehaviour
 		lastScore.text = "Last score: " + PlayerPrefs.GetInt("LASTSCORE");
 
 		if(endScore > int.Parse(scores[scores.Length-1])){
-
+			//get username
+			//recall http
+			//call highscores
 		}
 	}
 		
