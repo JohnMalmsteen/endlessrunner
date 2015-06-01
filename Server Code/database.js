@@ -3,7 +3,7 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
 
-mongoose.connect('mongodb://mugato:#slash93@ds035897.mongolab.com:35897/heroku_app35199285', function(err){
+mongoose.connect('XXXXXXXXXXXXXXXXXXXX', function(err){
   if(err)console.log("error: "+err);
   else{ console.log("Success");}
 });
